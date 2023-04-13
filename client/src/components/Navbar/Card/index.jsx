@@ -1,7 +1,7 @@
 import {Box,Image,Button} from "@chakra-ui/react"
 import {Link} from "react-router-dom"
 
-function Card() {
+function Card({item}) {
   return (
     <Box borderWidth='1px' borderRadius='lg' overflow='hidden' p='3'    > 
     <Link to='#/'>
@@ -11,10 +11,10 @@ function Card() {
                 10/04/2023
             </Box>
             <Box mt='1' fontWeight='semibold' as='h4' lineHeight='tight' >
-                MacBook
+               {item.title}
             </Box>
             <Box  >
-                100 Tl
+                {item.price}
             </Box>
         </Box>
     </Link>
