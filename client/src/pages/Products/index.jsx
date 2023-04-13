@@ -10,7 +10,6 @@ function Products() {
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
-console.log('data',data)
   return (
     <div>
       <Grid templateColumns="repeat(3, 1fr)" gap={4}>
