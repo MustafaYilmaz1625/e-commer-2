@@ -1,7 +1,7 @@
 import React from 'react'
 import {  Grid } from "@chakra-ui/react";
 import { useQuery } from "react-query";
-import Card from "../../components/Navbar/Card";
+import Card from "../../components/Card";
 import { fetchProductList } from '../../api';
 
 function Products() {
