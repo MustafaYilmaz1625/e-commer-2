@@ -1,25 +1,59 @@
-import React from 'react'
-import {  Grid } from "@chakra-ui/react";
-import { useQuery } from "react-query";
+import React from "react";
+import { Box, Flex, Grid, Button } from "@chakra-ui/react";
+import { useInfiniteQuery } from "react-query";
 import Card from "../../components/Card";
-import { fetchProductList } from '../../api';
+import { fetchProductList } from "../../api";
 
 function Products() {
-  const { isLoading, error, data } = useQuery("products", fetchProductList);
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery("products", fetchProductList, {
+    getNextPageParam: (lastGroup, allGroups) => {
+      const morePagesExist = lastGroup?.length === 12;
 
-  if (isLoading) return "Loading...";
+      if (!morePagesExist) {
+        return;
+      }
+      return allGroups.lastGroup + 1;
+    },
+  });
 
-  if (error) return "An error has occurred: " + error.message;
+  if (status === "loading") return "Loading...";
+
+  if (status === "error") return "An error has occurred: " + error.message;
   return (
     <div>
       <Grid templateColumns="repeat(3, 1fr)" gap={4}>
-        {data.map((item, index) => (
-          <Card key={index} item={item} />
+        {data.pages.map((group, i) => (
+          <React.Fragment key={i}>
+            {group.map((item) => (
+              <Box width="100%" key={item._id}>
+                <Card item={item} />
+              </Box>
+            ))}
+          </React.Fragment>
         ))}
-       
       </Grid>
+      <Flex mt="10" justifyContent="center">
+        <Button
+          isLoading={isFetchingNextPage}
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage
+            ? "Loading more..."
+            : hasNextPage
+            ? "Load More"
+            : "Nothing more to load"}
+        </Button>
+      </Flex>
     </div>
   );
 }
 
-export default Products
+export default Products;
