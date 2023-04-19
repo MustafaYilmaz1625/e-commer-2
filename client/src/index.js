@@ -4,6 +4,7 @@ import "./index.css";
 import "./reset.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import  {AuthProvider}  from "./contexts/AuthContext";
 import { ChakraProvider } from "@chakra-ui/react";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -12,7 +13,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnMount: false,
-      refetchOnWindowFocus:false
+      refetchOnWindowFocus: false,
     },
   },
 });
@@ -21,7 +22,9 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ChakraProvider>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </ChakraProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
