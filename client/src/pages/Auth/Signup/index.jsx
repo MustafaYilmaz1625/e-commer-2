@@ -14,9 +14,9 @@ import validationSchema from "./validations";
 import { fetchRegister } from "../../../api";
 import { useAuth } from "../../../contexts/AuthContext";
 
-function Signup() {
-  const login = useAuth()
-  
+function Signup({ history }) {
+  const login = useAuth();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,6 +31,7 @@ function Signup() {
           password: values.password,
         });
         login(registerResponse);
+        history.pushState("/profile");
       } catch (e) {
         bag.setErrors({ general: e.response.data.message });
       }
@@ -44,13 +45,9 @@ function Signup() {
             <Heading>Sign Up</Heading>
           </Box>
           <Box my={5}>
-            {
-              formik.errors.general && (
-                <Alert status="error">
-                  {formik.errors.general}
-                </Alert>
-              )
-            }
+            {formik.errors.general && (
+              <Alert status="error">{formik.errors.general}</Alert>
+            )}
           </Box>
           <Box my={5} textAlign={"left"}>
             <form action="" onSubmit={formik.handleSubmit}>
