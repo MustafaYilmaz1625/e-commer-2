@@ -6,8 +6,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useBasket } from "../../contexts/BasketContext";
 
 function Navbar() {
-  const {loggedIn} = useAuth();
-  const {items} = useBasket();
+  const loggedIn = useAuth();
+  const items = useBasket();
   return (
     <nav className={styles.nav}>
       <div className={styles.left}>
@@ -33,8 +33,13 @@ function Navbar() {
         )}
         {loggedIn && (
           <>
+            {items.length > 0 && (
+              <Link to="/basket">
+                <Button>Basket ({items.length})</Button>
+              </Link>
+            )}
             <Link to="/profile">
-              <Button >Profile</Button>
+              <Button>Profile</Button>
             </Link>
           </>
         )}

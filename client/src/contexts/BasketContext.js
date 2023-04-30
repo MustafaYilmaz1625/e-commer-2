@@ -1,20 +1,28 @@
-import {useState,createContext,useContex, useEffect} from "react"
+import { useState, createContext, useContext, useEffect } from "react";
 
 const BasketContext = createContext();
 
-const BasketProvider = ({children} => {
-    const [items,setItems] = useState([]);
+const BasketProvider = ({ children }) => {
+  const [items, setItems] = useState([]);
 
-    const values = {
-        items,
-        setItems
+  const addToBasket = (data,findBasketItem) => {
+    if(!findBasketItem){
+        return setItems((items)=> [data,...items])
     }
+    const filtered = items.filter((item)=> item._id !== findBasketItem._id)
+    setItems(filtered);
+  };
+  const values = {
+    items,
+    setItems,
+    addToBasket,
+  };
 
-    return (
-        <BasketContext.Provider value={values}>{children}</BasketContext.Provider>
-    );
-});
+  return (
+    <BasketContext.Provider value={values}>{children}</BasketContext.Provider>
+  );
+};
 
-const useBasket= () => useContext (BasketContext);
+const useBasket = () => useContext(BasketContext);
 
-export {BasketProvider,useBasket};
+export { BasketProvider, useBasket };

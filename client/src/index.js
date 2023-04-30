@@ -4,10 +4,12 @@ import "./index.css";
 import "./reset.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import  {AuthProvider}  from "./contexts/AuthContext";
+import { AuthProvider } from "./contexts/AuthContext";
+// import { BasketProvider } from "./contexts/BasketProvider";
 import { ChakraProvider } from "@chakra-ui/react";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { BasketProvider } from "./contexts/BasketContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,7 +25,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ChakraProvider>
         <AuthProvider>
-          <App />
+          <BasketProvider>
+            <App />
+          </BasketProvider>
         </AuthProvider>
       </ChakraProvider>
       <ReactQueryDevtools initialIsOpen={false} />
