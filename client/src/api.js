@@ -70,4 +70,9 @@ export const postOrder  = async (input) => {
     ` ${process.env.REACT_APP_BASE_URL}/order`,input );
   return data;
 };
+export const fetchOrders  = async (input) => {
+  const { data } = await axios.get(
+    ` ${process.env.REACT_APP_BASE_URL}/order`);
+  return data;
+};
 
