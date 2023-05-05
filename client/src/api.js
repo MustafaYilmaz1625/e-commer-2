@@ -75,4 +75,9 @@ export const fetchOrders  = async (input) => {
     ` ${process.env.REACT_APP_BASE_URL}/order`);
   return data;
 };
+export const deleteProduct  = async (product_id) => {
+  const { data } = await axios.delete(
+    ` ${process.env.REACT_APP_BASE_URL}/product/${product_id}`);
+  return data;
+};
 
