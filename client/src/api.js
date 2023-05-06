@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 axios.interceptors.request.use(
   function (config) {
     const { origin } = new URL(config.url);
@@ -20,8 +19,6 @@ axios.interceptors.request.use(
   }
 );
 
-
-
 export const fetchProductList = async ({ pageParam = 1 }) => {
   const { data } = await axios.get(
     `${process.env.REACT_APP_BASE_URL}/product?page=${pageParam}`
@@ -31,6 +28,13 @@ export const fetchProductList = async ({ pageParam = 1 }) => {
 export const fetchProduct = async (id) => {
   const { data } = await axios.get(
     `${process.env.REACT_APP_BASE_URL}/product/${id}`
+  );
+  return data;
+};
+export const postProduct = async (input) => {
+  const { data } = await axios.post(
+    `${process.env.REACT_APP_BASE_URL}/product/`,
+    input
   );
   return data;
 };
@@ -56,33 +60,37 @@ export const fetchMe = async () => {
   );
   return data;
 };
-export const fetchLogout  = async () => {
+export const fetchLogout = async () => {
   const { data } = await axios.post(
-    ` ${process.env.REACT_APP_BASE_URL}/auth/logout`,{
-      refresh_token:localStorage.getItem("refresh_token")
+    ` ${process.env.REACT_APP_BASE_URL}/auth/logout`,
+    {
+      refresh_token: localStorage.getItem("refresh_token"),
     }
   );
   return data;
 };
 
-export const postOrder  = async (input) => {
+export const postOrder = async (input) => {
   const { data } = await axios.post(
-    ` ${process.env.REACT_APP_BASE_URL}/order`,input );
+    ` ${process.env.REACT_APP_BASE_URL}/order`,
+    input
+  );
   return data;
 };
-export const fetchOrders  = async (input) => {
-  const { data } = await axios.get(
-    ` ${process.env.REACT_APP_BASE_URL}/order`);
+export const fetchOrders = async (input) => {
+  const { data } = await axios.get(` ${process.env.REACT_APP_BASE_URL}/order`);
   return data;
 };
-export const deleteProduct  = async (product_id) => {
+export const deleteProduct = async (product_id) => {
   const { data } = await axios.delete(
-    ` ${process.env.REACT_APP_BASE_URL}/product/${product_id}`);
+    ` ${process.env.REACT_APP_BASE_URL}/product/${product_id}`
+  );
   return data;
 };
-export const updateProduct  = async (input,product_id) => {
+export const updateProduct = async (input, product_id) => {
   const { data } = await axios.put(
-    ` ${process.env.REACT_APP_BASE_URL}/product/${product_id}`,input);
+    ` ${process.env.REACT_APP_BASE_URL}/product/${product_id}`,
+    input
+  );
   return data;
 };
-
